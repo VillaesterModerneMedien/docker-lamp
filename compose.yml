@@ -36,10 +36,10 @@ services:
     container_name: docker-lamp_bind
     hostname: bind
     ports:
-      - "192.168.178.138:53:53/tcp"
-      - "192.168.178.138:53:53/udp"
+      - "192.168.178.80:53:53/tcp"
+      - "192.168.178.80:53:53/udp"
     environment:
-      - DNS_A=*.local=192.168.178.138,*.test=192.168.178.138
+      - DNS_A=*.local=192.168.178.80,*.test=192.168.178.80
       - DNS_FORWARDER=1.1.1.1,1.0.0.1
 
   apache24:
@@ -94,7 +94,7 @@ services:
       APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php74/"
-      XDEBUG_REMOTE_HOST: 192.168.178.138
+      XDEBUG_REMOTE_HOST: 192.168.178.80
 
   php80:
     image: degobbis/php80:latest
@@ -114,7 +114,7 @@ services:
       APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php80/"
-      XDEBUG_REMOTE_HOST: 192.168.178.138
+      XDEBUG_REMOTE_HOST: 192.168.178.80
 
   php81:
     image: degobbis/php81:latest
@@ -134,7 +134,7 @@ services:
       APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php81/"
-      XDEBUG_REMOTE_HOST: 192.168.178.138
+      XDEBUG_REMOTE_HOST: 192.168.178.80
 
   php82:
     image: degobbis/php82:latest
@@ -154,7 +154,7 @@ services:
       APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php82/"
-      XDEBUG_REMOTE_HOST: 192.168.178.138
+      XDEBUG_REMOTE_HOST: 192.168.178.80
 
   php83:
     image: degobbis/php83:latest
@@ -174,7 +174,7 @@ services:
       APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php83/"
-      XDEBUG_REMOTE_HOST: 192.168.178.138
+      XDEBUG_REMOTE_HOST: 192.168.178.80
 
   mariadb1011:
     image: degobbis/mariadb1011:latest
