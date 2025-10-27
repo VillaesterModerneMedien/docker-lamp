@@ -39,7 +39,7 @@ services:
       - "192.168.178.80:53:53/tcp"
       - "192.168.178.80:53:53/udp"
     environment:
-      - DNS_A=*.local=192.168.178.80,*.test=192.168.178.80
+      - DNS_A=*.thewykiki.de=192.168.178.80
       - DNS_FORWARDER=1.1.1.1,1.0.0.1
 
   apache24:
