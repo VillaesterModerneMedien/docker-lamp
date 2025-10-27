@@ -72,8 +72,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
 
   php74:
     image: degobbis/php74:latest
@@ -90,8 +90,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php74/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
@@ -110,8 +110,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php80/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
@@ -130,8 +130,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php81/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
@@ -150,8 +150,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php82/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
@@ -170,8 +170,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       PHP_ENV: development
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php83/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
@@ -187,8 +187,8 @@ services:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
       MYSQL_ROOT_PASSWORD: root
-      APP_USER_ID: 0
-      APP_GROUP_ID: 0
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
       INIT_DB_BY_SCRIPT: 1
     # ports:
     #   - "3306:3306"   # besser nicht nach außen publishen
