@@ -1,0 +1,207 @@
+volumes:
+  pma:
+  db-data-dir:
+  phpsocket:
+
+services:
+  phpmyadmin:
+    image: phpmyadmin:fpm-alpine
+    container_name: docker-lamp_phpmyadmin
+    hostname: phpmyadmin
+    links:
+      - mariadb1011
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:rw
+      - pma:/var/www/html
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MAX_EXECUTION_TIME: 600
+      MEMORY_LIMIT: 512M
+      UPLOAD_LIMIT: 512M
+      MYSQL_ROOT_PASSWORD: root
+  mailcatcher:
+    image: mailhog/mailhog:latest
+    container_name: docker-lamp_mailcatcher
+    hostname: mailcatcher
+    restart: 'unless-stopped'
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+  bind:
+    image: cytopia/bind:alpine-0.35
+    container_name: docker-lamp_bind
+    hostname: bind
+    ports:
+      - "192.168.178.138:53:53/tcp"
+      - "192.168.178.138:53:53/udp"
+    environment:
+      - DNS_A=*.local=192.168.178.138,*.test=192.168.178.138
+      - DNS_FORWARDER=1.1.1.1,1.0.0.1
+  apache24:
+    image: degobbis/apache24:latest
+    container_name: docker-lamp_apache24
+    hostname: apache24
+    links: 
+      - "bind"
+      - "phpmyadmin"
+      - "php74"
+      - "php80"
+      - "php81"
+      - "php82"
+      - "php83"
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/httpd/apache24/conf.d:/usr/local/apache2/conf.d:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/httpd/apache24/vhosts:/usr/local/apache2/vhosts:rw
+      - /Users/whykiki/srv:/srv:rw
+      - /srv/ca:/srv/ca:rw
+      - pma:/var/www/pma
+      - phpsocket:/run/php
+    ports: 
+      - "80:8082"
+      - "443:8482"
+      - "8000:8000"
+      - "8400:8400"
+      - "8074:8074"
+      - "8474:8474"
+      - "8080:8080"
+      - "8480:8480"
+      - "8081:8081"
+      - "8481:8481"
+      - "8082:8082"
+      - "8482:8482"
+      - "8083:8083"
+      - "8483:8483"
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+  php74:
+    image: degobbis/php74:latest
+    container_name: docker-lamp_php74
+    hostname: php74
+    links:
+      - mariadb1011
+      - mailcatcher
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-fpm-global-overrides.conf:/usr/local/etc/php-fpm.d/zzz-php-fpm-global-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php74/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzzz-php-fpm-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-global-overrides.ini:/usr/local/etc/php/conf.d/z00-php-global-overrides.ini:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-xdebug-2.x.ini:/usr/local/etc/php/conf.d/z10-php-xdebug-2.x.ini:rw
+      - /Users/whykiki/srv:/srv:rw
+      - phpsocket:/run/php
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      PHP_ENV: development
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php74/"
+      XDEBUG_REMOTE_HOST: 192.168.178.138
+  php80:
+    image: degobbis/php80:latest
+    container_name: docker-lamp_php80
+    hostname: php80
+    links:
+      - mariadb1011
+      - mailcatcher
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-fpm-global-overrides.conf:/usr/local/etc/php-fpm.d/zzz-php-fpm-global-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php80/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzzz-php-fpm-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-global-overrides.ini:/usr/local/etc/php/conf.d/z00-php-global-overrides.ini:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-xdebug-3.x.ini:/usr/local/etc/php/conf.d/z10-php-xdebug-3.x.ini:rw
+      - /Users/whykiki/srv:/srv:rw
+      - phpsocket:/run/php
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      PHP_ENV: development
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php80/"
+      XDEBUG_REMOTE_HOST: 192.168.178.138
+  php81:
+    image: degobbis/php81:latest
+    container_name: docker-lamp_php81
+    hostname: php81
+    links:
+      - mariadb1011
+      - mailcatcher
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-fpm-global-overrides.conf:/usr/local/etc/php-fpm.d/zzz-php-fpm-global-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php81/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzzz-php-fpm-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-global-overrides.ini:/usr/local/etc/php/conf.d/z00-php-global-overrides.ini:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-xdebug-3.x.ini:/usr/local/etc/php/conf.d/z10-php-xdebug-3.x.ini:rw
+      - /Users/whykiki/srv:/srv:rw
+      - phpsocket:/run/php
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      PHP_ENV: development
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php81/"
+      XDEBUG_REMOTE_HOST: 192.168.178.138
+  php82:
+    image: degobbis/php82:latest
+    container_name: docker-lamp_php82
+    hostname: php82
+    links:
+      - mariadb1011
+      - mailcatcher
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-fpm-global-overrides.conf:/usr/local/etc/php-fpm.d/zzz-php-fpm-global-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php82/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzzz-php-fpm-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-global-overrides.ini:/usr/local/etc/php/conf.d/z00-php-global-overrides.ini:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-xdebug-3.x.ini:/usr/local/etc/php/conf.d/z10-php-xdebug-3.x.ini:rw
+      - /Users/whykiki/srv:/srv:rw
+      - phpsocket:/run/php
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      PHP_ENV: development
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php82/"
+      XDEBUG_REMOTE_HOST: 192.168.178.138
+  php83:
+    image: degobbis/php83:latest
+    container_name: docker-lamp_php83
+    hostname: php83
+    links:
+      - mariadb1011
+      - mailcatcher
+    volumes:
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-fpm-global-overrides.conf:/usr/local/etc/php-fpm.d/zzz-php-fpm-global-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php83/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzzz-php-fpm-overrides.conf:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-global-overrides.ini:/usr/local/etc/php/conf.d/z00-php-global-overrides.ini:rw
+      - /Users/whykiki/srv/git/docker-lamp/.config/php/php-xdebug-3.x.ini:/usr/local/etc/php/conf.d/z10-php-xdebug-3.x.ini:rw
+      - /Users/whykiki/srv:/srv:rw
+      - phpsocket:/run/php
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      PHP_ENV: development
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php83/"
+      XDEBUG_REMOTE_HOST: 192.168.178.138
+  mariadb1011:
+    image: degobbis/mariadb1011:latest
+    container_name: docker-lamp_db
+    hostname: mysql
+    volumes:
+      - db-data-dir:/var/lib/mysql
+      - /Users/whykiki/srv/initDB:/docker-entrypoint-initdb.d
+    environment:
+      TZ: Europe/Berlin
+      LC_ALL: de_DE.UTF-8
+      MYSQL_ROOT_PASSWORD: root
+      APP_USER_ID: 1000
+      APP_GROUP_ID: 1000
+      INIT_DB_BY_SCRIPT: 1
+    ports:
+      - "3306:3306"
