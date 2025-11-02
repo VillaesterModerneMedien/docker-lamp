@@ -176,8 +176,8 @@ services:
       PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d/:/srv/php/:/srv/php/php83/"
       XDEBUG_REMOTE_HOST: 192.168.178.80
 
-  mariadb1011:
-    image: degobbis/mariadb1011:latest
+  mariadb114:
+    image: degobbis/mariadb114:latest
     container_name: docker-lamp_db
     hostname: mysql
     volumes:
