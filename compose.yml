@@ -72,8 +72,8 @@ services:
     environment:
       TZ: Europe/Berlin
       LC_ALL: de_DE.UTF-8
-      APP_USER_ID: 1000
-      APP_GROUP_ID: 1000
+      APP_USER_ID: 2000
+      APP_GROUP_ID: 2000
 
   php74:
     image: degobbis/php74:latest
